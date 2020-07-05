@@ -1,42 +1,15 @@
 import React from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
+// import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>SWIGGY</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>SEARCH</Text>
-    </View>
-  );
-}
-
-function CartScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>CART</Text>
-    </View>
-  );
-}
-
-function AccountScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>ACCOUNT</Text>
-    </View>
-  );
-}
+import {
+  HomeScreen,
+  SearchScreen,
+  CartScreen,
+  AccountScreen,
+} from "./src/screens";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +19,7 @@ export default function App() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
-            return configueTabBarIcon(route, focused);
+            return configueTabBarIcons(route, focused);
           },
         })}
         tabBarOptions={{
@@ -55,7 +28,7 @@ export default function App() {
         }}
       >
         <Tab.Screen name="SWIGGY" component={HomeScreen} />
-        <Tab.Screen name="SEARCH" component={SettingsScreen} />
+        <Tab.Screen name="SEARCH" component={SearchScreen} />
         <Tab.Screen name="CART" component={CartScreen} />
         <Tab.Screen name="ACCOUNT" component={AccountScreen} />
       </Tab.Navigator>
@@ -63,7 +36,7 @@ export default function App() {
   );
 }
 
-const configueTabBarIcon = (route, focused) => {
+const configueTabBarIcons = (route, focused) => {
   // You can return any component that you like here!
   switch (route.name) {
     case "SWIGGY": {
