@@ -18,4 +18,7 @@ export const slideHeight = viewportHeight * 0.26;
 export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
+// export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+export const dishCompWidth = wp(50);
+
 const entryBorderRadius = 8;

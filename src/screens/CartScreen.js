@@ -8,3 +8,5 @@ export default function CartScreen() {
     </View>
   );
 }
+
+// Prop types to be implemented

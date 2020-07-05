@@ -71,3 +71,5 @@ const Category = ({ title, imageUri, bgColor, titleStyles, subTitle }) => (
 );
 
 export default Category;
+
+// Prop types to be implemented

@@ -3,15 +3,29 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 // import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   HomeScreen,
   SearchScreen,
   CartScreen,
   AccountScreen,
+  RestaurantScreen,
 } from "./src/screens";
 
 const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
+    <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Screen name="RestaurantDetails" component={RestaurantScreen} />
+  </HomeStack.Navigator>
+);
 
 export default function App() {
   return (
@@ -27,7 +41,7 @@ export default function App() {
           inactiveTintColor: "gray",
         }}
       >
-        <Tab.Screen name="SWIGGY" component={HomeScreen} />
+        <Tab.Screen name="SWIGGY" component={HomeStackScreen} />
         <Tab.Screen name="SEARCH" component={SearchScreen} />
         <Tab.Screen name="CART" component={CartScreen} />
         <Tab.Screen name="ACCOUNT" component={AccountScreen} />

@@ -22,10 +22,11 @@ import {
   itemWidth,
   slideHeight,
 } from "./carousal.style";
+import { dataForOfferSection, restaurantData } from "../../TestData";
 
 const { statusBarHeight } = Constants;
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="#fff" />
@@ -38,7 +39,7 @@ export default function HomeScreen() {
           <OffersSection />
         </View>
         <View style={{ backgroundColor: "#fff", marginTop: 10 }}>
-          <RestrauntsSection />
+          <RestrauntsSection navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -255,57 +256,28 @@ const TopPicks = () => (
 const OffersSection = () => {
   const [slider1ActiveSlide, setSlider1ActiveSlide] = useState(0);
   const slider1Ref = useRef(null);
-  const ENTRIES1 = React.useMemo(() => [
-    {
-      name: "first image",
-      imageUrl: require("../../../assets/swiggy-coupons.jpg"),
-    },
-    {
-      name: "second image",
-      imageUrl: require("../../../assets/maxresdefault.jpg"),
-    },
-    {
-      name: "third image",
-      imageUrl: require("../../../assets/Swiggy_Cashkaro.jpg"),
-    },
-    {
-      name: "fourth image",
-      imageUrl: require("../../../assets/1574661089.png"),
-    },
-    {
-      name: "sixth image",
-      imageUrl: require("../../../assets/1583822192166.png"),
-    },
-    {
-      name: "fifth image",
-      imageUrl: require("../../../assets/swiggyOfferimage.jpg"),
-    },
-  ]);
+  const entries = React.useMemo(() => dataForOfferSection);
 
   return (
     <View>
       <Carousel
         ref={slider1Ref}
-        data={ENTRIES1}
+        data={entries}
         renderItem={renderOffersItem}
         sliderWidth={sliderWidth}
         itemWidth={itemWidth}
         hasParallaxImages={true}
-        // firstItem={SLIDER_1_FIRST_ITEM}
         inactiveSlideScale={0.94}
         inactiveSlideOpacity={0.7}
-        // inactiveSlideShift={20}
         containerCustomStyle={carouselStyles.slider}
         contentContainerCustomStyle={carouselStyles.sliderContentContainer}
         loop={false}
         loopClonesPerSide={2}
         autoplay={false}
-        /* autoplayDelay={500}
-        autoplayInterval={3000} */
         onSnapToItem={(index) => setSlider1ActiveSlide(index)}
       />
       <Pagination
-        dotsLength={ENTRIES1.length}
+        dotsLength={entries.length}
         activeDotIndex={slider1ActiveSlide}
         containerStyle={carouselStyles.paginationContainer}
         dotColor={"rgba(0,0,0, 0.92)"}
@@ -320,8 +292,11 @@ const OffersSection = () => {
   );
 };
 
+/**
+ * Function used to render an item in Carousel in offers section
+ * @param {Object} param0 contains data of an item like image url, resturant name, address etc
+ */
 const renderOffersItem = ({ item }) => {
-  console.log("itemWidth", itemWidth, "slideHeight", slideHeight);
   return (
     <View
       style={{
@@ -342,34 +317,29 @@ const renderOffersItem = ({ item }) => {
   );
 };
 
-const RestrauntsSection = () => {
-  const data = [
-    {
-      restaurantName: "Instapizza",
-      foodCategory: "Pizzas, Italian",
-      address: "Greater Kailash 2 | 7.5 Kms",
-      rating: "3.8",
-      deliveryTime: "54 mins",
-      price: "500 for two",
-    },
-    {
-      restaurantName: "Wat a burger",
-      foodCategory: "Fast food, Snacks",
-      address: "Greater Kailash 2 | 7.9 Kms",
-      rating: "4.0",
-      deliveryTime: "54 mins",
-      price: "400 for two",
-    },
-  ];
-  const RenderRestraunts = () => {
-    return data.map((dt, idx) => <RestaurantComponent key={idx} {...dt} />);
+const RestrauntsSection = ({ navigation }) => {
+  const data = React.useMemo(() => restaurantData);
+
+  const handleNvigationToResturantDetails = (data) => {
+    navigation.navigate("RestaurantDetails", { data });
   };
+
+  const RenderRestraunts = () => {
+    return data.map((dt, idx) => (
+      <RestaurantComponent
+        key={idx}
+        {...dt}
+        onPress={handleNvigationToResturantDetails}
+      />
+    ));
+  };
+
   return (
     <View>
       <SectionHeading
         heading={"All Restaurants Nearby"}
         subHeading={"Discover unique tastes near you"}
-        style={restaurantSecHeading}
+        style={restaurantSecHeadingStyles}
       />
       <View style={{ padding: 10 }}>{RenderRestraunts()}</View>
     </View>
@@ -386,8 +356,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     padding: 10,
-    // elevation: 2,
-    // backgroundColor: "red",
     backgroundColor: "#fff",
   },
   addressSection: {
@@ -402,7 +370,6 @@ const styles = StyleSheet.create({
   },
   businessCategoryContainer: {
     height: 150,
-    // marginTop: 10,
     position: "relative",
     flexDirection: "row",
     display: "flex",
@@ -449,16 +416,13 @@ const styles = StyleSheet.create({
 const carouselStyles = StyleSheet.create({
   slider: {
     marginTop: 15,
-    overflow: "visible", // for custom animations
-    // backgroundColor: "red",
+    overflow: "visible",
   },
   sliderContentContainer: {
-    paddingVertical: 10, // for custom animation
-    // backgroundColor: "green",
+    paddingVertical: 10,
   },
   paginationContainer: {
     paddingVertical: 8,
-    // backgroundColor: "green",
   },
   paginationDot: {
     width: 8,
@@ -468,7 +432,7 @@ const carouselStyles = StyleSheet.create({
   },
 });
 
-const restaurantSecHeading = {
+const restaurantSecHeadingStyles = {
   containerStyle: {
     flexDirection: "column",
   },

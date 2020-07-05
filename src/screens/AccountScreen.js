@@ -8,3 +8,5 @@ export default function AccountScreen() {
     </View>
   );
 }
+
+// Prop types to be implemented

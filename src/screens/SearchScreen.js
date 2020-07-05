@@ -8,3 +8,5 @@ export default function SearchScreen() {
     </View>
   );
 }
+
+// Prop types to be implemented
