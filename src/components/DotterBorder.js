@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-
+console.log("Inside dotted border component");
 const DottedBorder = () => (
   <View style={{ paddingHorizontal: 10 }}>
     <Text numberOfLines={1} style={{ color: "#676A6B" }}>
