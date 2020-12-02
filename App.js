@@ -12,7 +12,7 @@ import {
   AccountScreen,
   RestaurantScreen,
 } from "./src/screens";
-
+console.log("added logs");
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
